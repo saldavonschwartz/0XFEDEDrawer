@@ -11,9 +11,9 @@
 
 static NSInteger kButtonTag = 99;
 
-@interface RootViewController () <F3DEDrawerDelegate>
+@interface RootViewController () <OXFEDEDrawerDelegate>
 @property (nonatomic, assign) BOOL shouldHideStatusBar;
-@property (nonatomic, strong) F3DEDrawer *drawer;
+@property (nonatomic, strong) OXFEDEDrawer *drawer;
 @property (nonatomic, strong) ViewController *drawerContent;
 @end
 
@@ -26,7 +26,7 @@ static NSInteger kButtonTag = 99;
     UIButton *toggle = (UIButton*)[self.navigationController.viewControllers.firstObject.view viewWithTag:kButtonTag];
     [toggle addTarget:self action:@selector(toggleDrawer) forControlEvents:UIControlEventTouchUpInside];
     
-    self.drawer = [F3DEDrawer new];
+    self.drawer = [OXFEDEDrawer new];
     self.drawer.container = self;
     self.drawerContent = [[UIStoryboard storyboardWithName:@"MainScene" bundle:nil]
                           instantiateViewControllerWithIdentifier:@"DrawerContentController"];
@@ -42,11 +42,11 @@ static NSInteger kButtonTag = 99;
     return self.shouldHideStatusBar;
 }
 
-//- (BOOL)drawerShouldBeginPanning:(F3DEDrawer *)drawer {
+//- (BOOL)drawerShouldBeginPanning:(OXFEDEDrawer *)drawer {
 //    return NO;
 //}
 
-- (void)drawerDidBeginPanning:(F3DEDrawer *)drawer {
+- (void)drawerDidBeginPanning:(OXFEDEDrawer *)drawer {
     if (!self.drawer.open) {
         self.shouldHideStatusBar = YES;
         [UIView animateWithDuration:.25 animations:^{
@@ -55,7 +55,7 @@ static NSInteger kButtonTag = 99;
     }
 }
 
-- (void)drawerDidEndPanning:(F3DEDrawer *)drawer {
+- (void)drawerDidEndPanning:(OXFEDEDrawer *)drawer {
     if (!self.drawer.open) {
         self.shouldHideStatusBar = NO;
         [UIView animateWithDuration:.25 animations:^{

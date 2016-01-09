@@ -22,9 +22,9 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-#import "F3DEDrawer.h"
+#import "OXFEDEDrawer.h"
 
 //  Default Appearance Delegate
-@interface F3DEDrawerAppearanceDelegate : NSObject<F3DEDrawerAppearanceDelegate>
+@interface OXFEDEDrawerAppearanceDelegate : NSObject<OXFEDEDrawerAppearanceDelegate>
 @end
 

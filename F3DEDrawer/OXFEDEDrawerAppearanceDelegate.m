@@ -22,15 +22,15 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-#import "F3DEDrawerAppearanceDelegate.h"
+#import "OXFEDEDrawerAppearanceDelegate.h"
 
 static CGFloat kSpringCompensation = 40.;
 static CGFloat kOverlayOpacity = 0.5;
 static CGFloat kDrawerShadowOpacity = 0.4;
 
-@implementation F3DEDrawerAppearanceDelegate
+@implementation OXFEDEDrawerAppearanceDelegate
 
-- (void)drawer:(F3DEDrawer *)drawer appearanceForInitialization:(F3DEDrawerAppearanceState *)state {
+- (void)drawer:(OXFEDEDrawer *)drawer appearanceForInitialization:(OXFEDEDrawerAppearanceState *)state {
     drawer.view.layer.shadowColor = [UIColor blackColor].CGColor;
     drawer.view.layer.shadowRadius = 6.;
     drawer.view.layer.shadowOffset = CGSizeZero;
@@ -39,26 +39,26 @@ static CGFloat kDrawerShadowOpacity = 0.4;
     state.overlay.alpha = drawer.open ? kOverlayOpacity : 0.;
 }
 
-- (void)drawer:(F3DEDrawer *)drawer appearanceForUpdate:(F3DEDrawerAppearanceState *)state {
+- (void)drawer:(OXFEDEDrawer *)drawer appearanceForUpdate:(OXFEDEDrawerAppearanceState *)state {
     drawer.view.backgroundColor = drawer.content ? drawer.content.view.backgroundColor : [UIColor whiteColor];
 }
 
-- (void)drawer:(F3DEDrawer *)drawer appearanceForTransitionBegin:(F3DEDrawerAppearanceState *)state {
+- (void)drawer:(OXFEDEDrawer *)drawer appearanceForTransitionBegin:(OXFEDEDrawerAppearanceState *)state {
     drawer.view.layer.shadowOpacity = kDrawerShadowOpacity;
 }
 
-- (void)drawer:(F3DEDrawer *)drawer appearanceForTransitionEnd:(F3DEDrawerAppearanceState *)state {
+- (void)drawer:(OXFEDEDrawer *)drawer appearanceForTransitionEnd:(OXFEDEDrawerAppearanceState *)state {
     drawer.view.layer.shadowOpacity = drawer.open ? kDrawerShadowOpacity : 0.;
 }
 
-- (void)drawer:(F3DEDrawer *)drawer appearanceForTransitionProgress:(F3DEDrawerAppearanceState *)state {
+- (void)drawer:(OXFEDEDrawer *)drawer appearanceForTransitionProgress:(OXFEDEDrawerAppearanceState *)state {
     state.overlay.alpha = kOverlayOpacity * state.openFraction;
     CGRect frame = drawer.view.frame;
     frame.origin = state.targetPosition;
     drawer.view.frame = frame;
 }
 
-- (void)drawer:(F3DEDrawer *)drawer animationForTransition:(F3DEDrawerAppearanceState *)state completion:(void (^)(void))completion {
+- (void)drawer:(OXFEDEDrawer *)drawer animationForTransition:(OXFEDEDrawerAppearanceState *)state completion:(void (^)(void))completion {
     __block CGRect targetFrame = (CGRect){state.targetPosition, drawer.view.frame.size};
     BOOL willClose = CGPointEqualToPoint(state.targetPosition, state.closedPosition);
     
@@ -88,18 +88,18 @@ static CGFloat kDrawerShadowOpacity = 0.4;
     }
 }
 
-- (CGFloat)animationDurationForDrawer:(F3DEDrawer*)drawer state:(F3DEDrawerAppearanceState*)state {
+- (CGFloat)animationDurationForDrawer:(OXFEDEDrawer*)drawer state:(OXFEDEDrawerAppearanceState*)state {
     CGFloat remainingTime;
     
     switch (drawer.edge) {
-        case F3DEDrawerEdgeLeft:
-        case F3DEDrawerEdgeRight: {
+        case OXFEDEDrawerEdgeLeft:
+        case OXFEDEDrawerEdgeRight: {
             remainingTime = fabs(drawer.view.frame.origin.x - state.targetPosition.x) / fabs(state.velocity.x);
             break;
         }
             
-        case F3DEDrawerEdgeTop:
-        case F3DEDrawerEdgeBottom: {
+        case OXFEDEDrawerEdgeTop:
+        case OXFEDEDrawerEdgeBottom: {
             remainingTime = fabs(drawer.view.frame.origin.y - state.targetPosition.y) / fabs(state.velocity.y);
             break;
         }
@@ -108,12 +108,12 @@ static CGFloat kDrawerShadowOpacity = 0.4;
     return  MAX(0.15, MIN(remainingTime, .3));
 }
 
-- (void)adjustDrawer:(F3DEDrawer*)drawer forTransitionToFrame:(CGRect*)targetFrame springOffset:(CGFloat)springOffset {
+- (void)adjustDrawer:(OXFEDEDrawer*)drawer forTransitionToFrame:(CGRect*)targetFrame springOffset:(CGFloat)springOffset {
     CGRect drawerFrame = drawer.view.frame;
     CGRect contentFrame = drawer.content.view.frame;
     
     switch (drawer.edge) {
-        case F3DEDrawerEdgeLeft: {
+        case OXFEDEDrawerEdgeLeft: {
             drawerFrame.origin.x -= springOffset;
             drawerFrame.size.width += springOffset;
             contentFrame.origin.x += springOffset;
@@ -123,7 +123,7 @@ static CGFloat kDrawerShadowOpacity = 0.4;
             break;
         }
             
-        case F3DEDrawerEdgeRight: {
+        case OXFEDEDrawerEdgeRight: {
             drawerFrame.origin.x += springOffset;
             drawerFrame.size.width += springOffset;
             contentFrame.origin.x -= springOffset;
@@ -133,7 +133,7 @@ static CGFloat kDrawerShadowOpacity = 0.4;
             break;
         }
             
-        case F3DEDrawerEdgeTop: {
+        case OXFEDEDrawerEdgeTop: {
             drawerFrame.origin.y -= springOffset;
             drawerFrame.size.height += springOffset;
             contentFrame.origin.y += springOffset;
@@ -143,7 +143,7 @@ static CGFloat kDrawerShadowOpacity = 0.4;
             break;
         }
             
-        case F3DEDrawerEdgeBottom: {
+        case OXFEDEDrawerEdgeBottom: {
             drawerFrame.origin.y += springOffset;
             drawerFrame.size.height += springOffset;
             contentFrame.origin.y -= springOffset;

@@ -26,46 +26,47 @@
 #import <UIKit/UIKit.h>
 
 #pragma mark - Drawer:
-@protocol F3DEDrawerDelegate;
-@protocol F3DEDrawerAppearanceDelegate;
+@protocol OXFEDEDrawerDelegate;
+@protocol OXFEDEDrawerAppearanceDelegate;
 
-typedef NS_ENUM(NSInteger, F3DEDrawerEdge) {
-    F3DEDrawerEdgeLeft = UIRectEdgeLeft,
-    F3DEDrawerEdgeRight = UIRectEdgeRight,
-    F3DEDrawerEdgeTop = UIRectEdgeTop,
-    F3DEDrawerEdgeBottom = UIRectEdgeBottom,
+typedef NS_ENUM(NSInteger, OXFEDEDrawerEdge) {
+    OXFEDEDrawerEdgeLeft = UIRectEdgeLeft,
+    OXFEDEDrawerEdgeRight = UIRectEdgeRight,
+    OXFEDEDrawerEdgeTop = UIRectEdgeTop,
+    OXFEDEDrawerEdgeBottom = UIRectEdgeBottom,
 };
 
-@interface F3DEDrawer : UIViewController
+
+@interface OXFEDEDrawer : UIViewController
 //  Open / closes the drawer:
 @property (nonatomic, assign) BOOL open;
 //  Drawer size as a fraction [0-1 range] of its container view (default = w:.8, h:1.):
 @property (nonatomic, assign) CGSize scale;
 //  Anchor point along the edge axis [0 - 1 range] (default = 0.5):
 @property (nonatomic, assign) CGFloat anchor;
-//  Edge the drawer is anchored to (default = F3DEDrawerEdgeLeft):
-@property (nonatomic, assign) F3DEDrawerEdge edge;
+//  Edge the drawer is anchored to (default = OXFEDEDrawerEdgeLeft):
+@property (nonatomic, assign) OXFEDEDrawerEdge edge;
 //  View controller whose view will be displayed in the drawer:
 @property (nonatomic, strong) UIViewController *content;
 // View controller which will contain the drawer:
 @property (nonatomic, weak) UIViewController *container;
 //  Event delegate (optional):
-@property (nonatomic, weak) NSObject<F3DEDrawerDelegate> *delegate;
-//  Appearance delegate (required, default = F3DEDrawerAppearanceDelegate):
-@property (nonatomic, strong) NSObject<F3DEDrawerAppearanceDelegate> *appearanceDelegate;
+@property (nonatomic, weak) NSObject<OXFEDEDrawerDelegate> *delegate;
+//  Appearance delegate (required, default = OXFEDEDrawerAppearanceDelegate):
+@property (nonatomic, strong) NSObject<OXFEDEDrawerAppearanceDelegate> *appearanceDelegate;
 @end
 
 #pragma  mark - Event Delegate:
-@protocol F3DEDrawerDelegate <NSObject>
+@protocol OXFEDEDrawerDelegate <NSObject>
 @optional
-- (BOOL)drawerShouldBeginPanning:(F3DEDrawer *)drawer;
-- (void)drawerDidBeginPanning:(F3DEDrawer *)drawer;
-- (void)drawer:(F3DEDrawer*)drawer didPan:(CGFloat)openFraction;
-- (void)drawerDidEndPanning:(F3DEDrawer*)drawer;
+- (BOOL)drawerShouldBeginPanning:(OXFEDEDrawer *)drawer;
+- (void)drawerDidBeginPanning:(OXFEDEDrawer *)drawer;
+- (void)drawer:(OXFEDEDrawer*)drawer didPan:(CGFloat)openFraction;
+- (void)drawerDidEndPanning:(OXFEDEDrawer*)drawer;
 @end
 
 #pragma  mark - Appearance Delegate:
-@interface F3DEDrawerAppearanceState : NSObject;
+@interface OXFEDEDrawerAppearanceState : NSObject;
 @property (nonatomic, assign, readonly) CGPoint closedPosition;
 @property (nonatomic, assign, readonly) CGPoint openPosition;
 @property (nonatomic, assign, readonly) CGPoint targetPosition;
@@ -74,29 +75,29 @@ typedef NS_ENUM(NSInteger, F3DEDrawerEdge) {
 @property (nonatomic, strong, readonly) UIView *overlay;
 @end
 
-@protocol F3DEDrawerAppearanceDelegate <NSObject>
+@protocol OXFEDEDrawerAppearanceDelegate <NSObject>
 /*  Called the first time a delegate is assigned to the drawer.
     This is useful for instance to set up appearance aspects that will stay constant throughout the delegate's lifecycle.*/
-- (void)drawer:(F3DEDrawer*)drawer appearanceForInitialization:(F3DEDrawerAppearanceState*)state;
+- (void)drawer:(OXFEDEDrawer*)drawer appearanceForInitialization:(OXFEDEDrawerAppearanceState*)state;
 
 /*  Called when new content is assigned to the drawer or the drawer goes thru a geometry / mechanics update.*/
-- (void)drawer:(F3DEDrawer*)drawer appearanceForUpdate:(F3DEDrawerAppearanceState*)state;
+- (void)drawer:(OXFEDEDrawer*)drawer appearanceForUpdate:(OXFEDEDrawerAppearanceState*)state;
 
 /*  Called for the beginning of a transition between open and closed, regardless of whether the transition was 
     initiated programmatically or thru gestures.*/
-- (void)drawer:(F3DEDrawer*)drawer appearanceForTransitionBegin:(F3DEDrawerAppearanceState*)state;
+- (void)drawer:(OXFEDEDrawer*)drawer appearanceForTransitionBegin:(OXFEDEDrawerAppearanceState*)state;
 
 /*  Called for the end of a transition between open and closed, regardless of whether the transition was initiated 
     programmatically or thru gestures.*/
-- (void)drawer:(F3DEDrawer*)drawer appearanceForTransitionEnd:(F3DEDrawerAppearanceState*)state;
+- (void)drawer:(OXFEDEDrawer*)drawer appearanceForTransitionEnd:(OXFEDEDrawerAppearanceState*)state;
 
 /*  Called after `-drawer:appearanceForTransitionBegin:` each time the user pans the drawer.*/
-- (void)drawer:(F3DEDrawer*)drawer appearanceForTransitionProgress:(F3DEDrawerAppearanceState*)state;
+- (void)drawer:(OXFEDEDrawer*)drawer appearanceForTransitionProgress:(OXFEDEDrawerAppearanceState*)state;
 
 /*  Called for the delegate to animate a transition from whatever position the drawer happens to be in towards a 
     final state (open or closed). This method will be called regardless of how the transition was initiated and is always 
     called after `-drawer:appearanceForTransitionBegin:` (and after `-drawer:appearanceForTransitionProgress:` 
     if transitioning thru a gesture) and before `-drawer:appearanceForTransitionEnd:`. The delegate must call the 
     completion block when done animating.*/
-- (void)drawer:(F3DEDrawer*)drawer animationForTransition:(F3DEDrawerAppearanceState*)state completion:(void(^)(void))completion;
+- (void)drawer:(OXFEDEDrawer*)drawer animationForTransition:(OXFEDEDrawerAppearanceState*)state completion:(void(^)(void))completion;
 @end

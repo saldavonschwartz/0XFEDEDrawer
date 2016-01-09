@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "F3DEDrawer.h"
+#import "OXFEDEDrawer.h"
 #import "RootViewController.h"
 
 typedef NS_ENUM(NSInteger, CellType) {
@@ -20,7 +20,7 @@ typedef NS_ENUM(NSInteger, CellType) {
 static NSInteger kCellTitleTag = 99;
 
 @interface ViewController ()
-@property (nonatomic, weak) F3DEDrawer *drawer;
+@property (nonatomic, weak) OXFEDEDrawer *drawer;
 @property (nonatomic, weak) RootViewController *rootController;
 @property (nonatomic, weak) UINavigationController *navigationController;
 @property (nonatomic, strong) void(^action)();
@@ -38,8 +38,8 @@ static NSInteger kCellTitleTag = 99;
 }
 
 - (void)didMoveToParentViewController:(UIViewController *)parent {
-    if ([parent isKindOfClass:F3DEDrawer.class]) {
-        self.drawer = (F3DEDrawer*)parent;
+    if ([parent isKindOfClass:OXFEDEDrawer.class]) {
+        self.drawer = (OXFEDEDrawer*)parent;
         self.rootController = (RootViewController*)[[UIApplication sharedApplication].delegate window].rootViewController;
         self.navigationController = self.rootController.childViewControllers.firstObject;
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
@@ -72,7 +72,7 @@ static NSInteger kCellTitleTag = 99;
         }
             
         case CellTypeEdge: {
-            if (self.drawer.edge == F3DEDrawerEdgeLeft) {
+            if (self.drawer.edge == OXFEDEDrawerEdgeLeft) {
                 title.text = @"Switch to edge: right side";
             }
             else {
@@ -125,11 +125,11 @@ static NSInteger kCellTitleTag = 99;
             
         case CellTypeEdge: {
             self.action = ^{
-                if (_self.drawer.edge == F3DEDrawerEdgeLeft) {
-                    _self.drawer.edge = F3DEDrawerEdgeRight;
+                if (_self.drawer.edge == OXFEDEDrawerEdgeLeft) {
+                    _self.drawer.edge = OXFEDEDrawerEdgeRight;
                 }
                 else {
-                    _self.drawer.edge = F3DEDrawerEdgeLeft;
+                    _self.drawer.edge = OXFEDEDrawerEdgeLeft;
                 }
                 _self.drawer.open = YES;
             };

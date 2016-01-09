@@ -22,11 +22,11 @@
 //    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //    SOFTWARE.
 
-#import "F3DEDrawer.h"
-#import "F3DEDrawerAppearanceDelegate.h"
+#import "OXFEDEDrawer.h"
+#import "OXFEDEDrawerAppearanceDelegate.h"
 
-#pragma mark - F3DEDrawerAppearanceState - Private:
-@interface F3DEDrawerAppearanceState ()
+#pragma mark - OXFEDEDrawerAppearanceState - Private:
+@interface OXFEDEDrawerAppearanceState ()
 @property (nonatomic, assign, readwrite) CGPoint closedPosition;
 @property (nonatomic, assign, readwrite) CGPoint openPosition;
 @property (nonatomic, assign, readwrite) CGPoint targetPosition;
@@ -35,7 +35,7 @@
 @property (nonatomic, strong, readwrite) UIView *overlay;
 @end
 
-@implementation F3DEDrawerAppearanceState
+@implementation OXFEDEDrawerAppearanceState
 @end
 
 #pragma mark - KVOView:
@@ -54,12 +54,12 @@
 }
 @end
 
-#pragma mark - F3DEDrawer - Private:
-@interface F3DEDrawer ()
+#pragma mark - OXFEDEDrawer - Private:
+@interface OXFEDEDrawer ()
 @property (nonatomic, strong) UIScreenEdgePanGestureRecognizer *edgeRecognizer;
 @property (nonatomic, assign) BOOL needsUpdate;
 @property (nonatomic, assign) BOOL stateChangeTriggeredFromGesture;
-@property (nonatomic, strong) F3DEDrawerAppearanceState *state;
+@property (nonatomic, strong) OXFEDEDrawerAppearanceState *state;
 @property (nonatomic, copy) CGPoint(^clamp)(CGPoint);
 @property (nonatomic, copy) BOOL(^isOpen)(void);
 @property (nonatomic, copy) CGFloat(^openFraction)(void);
@@ -67,7 +67,7 @@
 @property (nonatomic, assign) BOOL transitioning;
 @end
 
-@implementation F3DEDrawer
+@implementation OXFEDEDrawer
 
 #pragma mark - Class:
 + (NSSet *)keyPathsForValuesAffectingNeedsUpdate {
@@ -83,10 +83,10 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.state  = [F3DEDrawerAppearanceState new];
+        self.state  = [OXFEDEDrawerAppearanceState new];
         [self initGeometry];
         [self initMechanics];
-        self.appearanceDelegate = [F3DEDrawerAppearanceDelegate new];
+        self.appearanceDelegate = [OXFEDEDrawerAppearanceDelegate new];
         [self addObserver:self forKeyPath:@"needsUpdate" options:NSKeyValueObservingOptionNew context:nil];
     }
     
@@ -105,7 +105,7 @@
     if ([keyPath isEqualToString:@"needsUpdate"]) {
         NSAssert(!self.transitioning,
                  @"Attempted to modify geometry / mechanics "
-                 @"of F3DEDrawer at the same time as appearance delegate.");
+                 @"of OXFEDEDrawer at the same time as appearance delegate.");
         _needsUpdate = NO;
         [self updateGeometry];
         [self updateMechanics];
@@ -165,10 +165,10 @@
 }
 
 #pragma mark - Appearance:
-- (void)setAppearanceDelegate:(NSObject<F3DEDrawerAppearanceDelegate> *)appearanceDelegate {
+- (void)setAppearanceDelegate:(NSObject<OXFEDEDrawerAppearanceDelegate> *)appearanceDelegate {
     NSAssert(appearanceDelegate,
-             @"F3DEDrawer requires an appearance delegate "
-             @"(i.e. F3DEDrawerAppearanceDelegate).");
+             @"OXFEDEDrawer requires an appearance delegate "
+             @"(i.e. OXFEDEDrawerAppearanceDelegate).");
     if (_appearanceDelegate != appearanceDelegate) {
         _appearanceDelegate  = appearanceDelegate;
     }
@@ -200,7 +200,7 @@
 
 #pragma mark - Mechanics:
 - (void)initMechanics {
-    self.edge = F3DEDrawerEdgeLeft;
+    self.edge = OXFEDEDrawerEdgeLeft;
     self.anchor = 0.5;
     self.state.overlay = [UIView new];
     
@@ -222,7 +222,7 @@
         [self.view.superview addGestureRecognizer:self.edgeRecognizer];
         self.edgeRecognizer.edges = (UIRectEdge)self.edge;
         
-        __weak F3DEDrawer *_self = self;
+        __weak OXFEDEDrawer *_self = self;
         CGSize containerSize = self.view.superview.bounds.size;
         CGSize contentSize = self.view.bounds.size;
         CGPoint anchorPoint;
@@ -230,7 +230,7 @@
         anchorPoint.y = (containerSize.height - contentSize.height) * self.anchor;
         
         switch (self.edge) {
-            case F3DEDrawerEdgeLeft: {
+            case OXFEDEDrawerEdgeLeft: {
                 self.state.openPosition = CGPointMake(0., anchorPoint.y);
                 self.state.closedPosition = (CGPoint){-contentSize.width, anchorPoint.y};
                 self.referenceVelocity = CGPointMake(1., 0.);
@@ -250,7 +250,7 @@
                 break;
             }
                 
-            case F3DEDrawerEdgeRight: {
+            case OXFEDEDrawerEdgeRight: {
                 self.state.openPosition = (CGPoint){containerSize.width - contentSize.width, anchorPoint.y};
                 self.state.closedPosition = (CGPoint){containerSize.width, anchorPoint.y};
                 self.referenceVelocity = CGPointMake(-1., 0.);
@@ -270,7 +270,7 @@
                 break;
             }
                 
-            case F3DEDrawerEdgeTop: {
+            case OXFEDEDrawerEdgeTop: {
                 self.state.openPosition = CGPointMake(anchorPoint.x, 0.);
                 self.state.closedPosition = (CGPoint){anchorPoint.x, -contentSize.height};
                 self.referenceVelocity = CGPointMake(0., 1.);
@@ -290,7 +290,7 @@
                 break;
             }
                 
-            case F3DEDrawerEdgeBottom: {
+            case OXFEDEDrawerEdgeBottom: {
                 self.state.openPosition = (CGPoint){anchorPoint.x, containerSize.height - contentSize.height};
                 self.state.closedPosition = (CGPoint){anchorPoint.x, containerSize.height};
                 self.referenceVelocity = CGPointMake(0., -1.);
@@ -323,7 +323,7 @@
     if (!self.stateChangeTriggeredFromGesture) {
         NSAssert(!self.transitioning,
                  @"Attempted to modify geometry / mechanics of "
-                 @"F3DEDrawer at the same time as appearance delegate.");
+                 @"OXFEDEDrawer at the same time as appearance delegate.");
         if (self.open == open || ![self beginTransition]) {
             return;
         }

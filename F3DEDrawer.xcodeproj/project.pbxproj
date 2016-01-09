@@ -11,8 +11,8 @@
 		15FC6B1C1C40584600BE32C8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FC6B1B1C40584600BE32C8 /* AppDelegate.m */; };
 		15FC6B241C40584600BE32C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15FC6B231C40584600BE32C8 /* Assets.xcassets */; };
 		15FC6B271C40584600BE32C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15FC6B251C40584600BE32C8 /* LaunchScreen.storyboard */; };
-		15FC6B361C40589F00BE32C8 /* F3DEDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FC6B2F1C40589F00BE32C8 /* F3DEDrawer.m */; settings = {ASSET_TAGS = (); }; };
-		15FC6B371C40589F00BE32C8 /* F3DEDrawerAppearanceDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FC6B311C40589F00BE32C8 /* F3DEDrawerAppearanceDelegate.m */; settings = {ASSET_TAGS = (); }; };
+		15FC6B361C40589F00BE32C8 /* OXFEDEDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FC6B2F1C40589F00BE32C8 /* OXFEDEDrawer.m */; settings = {ASSET_TAGS = (); }; };
+		15FC6B371C40589F00BE32C8 /* OXFEDEDrawerAppearanceDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FC6B311C40589F00BE32C8 /* OXFEDEDrawerAppearanceDelegate.m */; settings = {ASSET_TAGS = (); }; };
 		15FC6B381C40589F00BE32C8 /* RootViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FC6B331C40589F00BE32C8 /* RootViewController.m */; settings = {ASSET_TAGS = (); }; };
 		15FC6B391C40589F00BE32C8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 15FC6B351C40589F00BE32C8 /* ViewController.m */; settings = {ASSET_TAGS = (); }; };
 		15FC6B3E1C40594C00BE32C8 /* MainScene.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 15FC6B3C1C40594C00BE32C8 /* MainScene.storyboard */; settings = {ASSET_TAGS = (); }; };
@@ -26,10 +26,10 @@
 		15FC6B231C40584600BE32C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		15FC6B261C40584600BE32C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		15FC6B281C40584600BE32C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		15FC6B2E1C40589F00BE32C8 /* F3DEDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = F3DEDrawer.h; sourceTree = "<group>"; };
-		15FC6B2F1C40589F00BE32C8 /* F3DEDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = F3DEDrawer.m; sourceTree = "<group>"; };
-		15FC6B301C40589F00BE32C8 /* F3DEDrawerAppearanceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = F3DEDrawerAppearanceDelegate.h; sourceTree = "<group>"; };
-		15FC6B311C40589F00BE32C8 /* F3DEDrawerAppearanceDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = F3DEDrawerAppearanceDelegate.m; sourceTree = "<group>"; };
+		15FC6B2E1C40589F00BE32C8 /* OXFEDEDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXFEDEDrawer.h; sourceTree = "<group>"; };
+		15FC6B2F1C40589F00BE32C8 /* OXFEDEDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXFEDEDrawer.m; sourceTree = "<group>"; };
+		15FC6B301C40589F00BE32C8 /* OXFEDEDrawerAppearanceDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OXFEDEDrawerAppearanceDelegate.h; sourceTree = "<group>"; };
+		15FC6B311C40589F00BE32C8 /* OXFEDEDrawerAppearanceDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OXFEDEDrawerAppearanceDelegate.m; sourceTree = "<group>"; };
 		15FC6B321C40589F00BE32C8 /* RootViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootViewController.h; sourceTree = "<group>"; };
 		15FC6B331C40589F00BE32C8 /* RootViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootViewController.m; sourceTree = "<group>"; };
 		15FC6B341C40589F00BE32C8 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -67,10 +67,10 @@
 		15FC6B161C40584600BE32C8 /* F3DEDrawer */ = {
 			isa = PBXGroup;
 			children = (
-				15FC6B2E1C40589F00BE32C8 /* F3DEDrawer.h */,
-				15FC6B2F1C40589F00BE32C8 /* F3DEDrawer.m */,
-				15FC6B301C40589F00BE32C8 /* F3DEDrawerAppearanceDelegate.h */,
-				15FC6B311C40589F00BE32C8 /* F3DEDrawerAppearanceDelegate.m */,
+				15FC6B2E1C40589F00BE32C8 /* OXFEDEDrawer.h */,
+				15FC6B2F1C40589F00BE32C8 /* OXFEDEDrawer.m */,
+				15FC6B301C40589F00BE32C8 /* OXFEDEDrawerAppearanceDelegate.h */,
+				15FC6B311C40589F00BE32C8 /* OXFEDEDrawerAppearanceDelegate.m */,
 				15FC6B321C40589F00BE32C8 /* RootViewController.h */,
 				15FC6B331C40589F00BE32C8 /* RootViewController.m */,
 				15FC6B341C40589F00BE32C8 /* ViewController.h */,
@@ -165,10 +165,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				15FC6B391C40589F00BE32C8 /* ViewController.m in Sources */,
-				15FC6B361C40589F00BE32C8 /* F3DEDrawer.m in Sources */,
+				15FC6B361C40589F00BE32C8 /* OXFEDEDrawer.m in Sources */,
 				15FC6B1C1C40584600BE32C8 /* AppDelegate.m in Sources */,
 				15FC6B191C40584600BE32C8 /* main.m in Sources */,
-				15FC6B371C40589F00BE32C8 /* F3DEDrawerAppearanceDelegate.m in Sources */,
+				15FC6B371C40589F00BE32C8 /* OXFEDEDrawerAppearanceDelegate.m in Sources */,
 				15FC6B381C40589F00BE32C8 /* RootViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,6 +318,7 @@
 				15FC6B2D1C40584600BE32C8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
