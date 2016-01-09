@@ -23,7 +23,10 @@ Simple drawer (`UIViewController` container) for iOS.
 
 [Detailed tutorial on this component's implementation](www.apple.com)
 
-
+<br>
 Copyright (c) 2015 Federico Saldarini
 
-https://www.linkedin.com/in/federicosaldarini
+[LinkedIn][l1] | [GitHub][l2]
+
+[l1]: https://www.linkedin.com/in/federicosaldarini
+[l2]: https://github.com/saldavonschwartz

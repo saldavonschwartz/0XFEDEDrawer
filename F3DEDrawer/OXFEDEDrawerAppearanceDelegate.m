@@ -2,6 +2,7 @@
 //
 //    Copyright (c) 2015 Federico Saldarini
 //    https://www.linkedin.com/in/federicosaldarini
+//    https://github.com/saldavonschwartz
 //
 //
 //    Permission is hereby granted, free of charge, to any person obtaining a copy
