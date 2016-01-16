@@ -1,6 +1,6 @@
 # OXFEDEDrawer
 
-Simple drawer (`UIViewController` container) for iOS.
+Customizable drawer (`UIViewController` container) for iOS.
 
 
 ## How to use it:
