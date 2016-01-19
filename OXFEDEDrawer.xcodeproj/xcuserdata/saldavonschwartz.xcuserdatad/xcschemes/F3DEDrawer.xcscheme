@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "15FC6B131C40584600BE32C8"
-               BuildableName = "F3DEDrawer.app"
-               BlueprintName = "F3DEDrawer"
-               ReferencedContainer = "container:F3DEDrawer.xcodeproj">
+               BuildableName = "OXFEDEDrawer.app"
+               BlueprintName = "OXFEDEDrawer"
+               ReferencedContainer = "container:OXFEDEDrawer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "15FC6B131C40584600BE32C8"
-            BuildableName = "F3DEDrawer.app"
-            BlueprintName = "F3DEDrawer"
-            ReferencedContainer = "container:F3DEDrawer.xcodeproj">
+            BuildableName = "OXFEDEDrawer.app"
+            BlueprintName = "OXFEDEDrawer"
+            ReferencedContainer = "container:OXFEDEDrawer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -56,9 +56,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "15FC6B131C40584600BE32C8"
-            BuildableName = "F3DEDrawer.app"
-            BlueprintName = "F3DEDrawer"
-            ReferencedContainer = "container:F3DEDrawer.xcodeproj">
+            BuildableName = "OXFEDEDrawer.app"
+            BlueprintName = "OXFEDEDrawer"
+            ReferencedContainer = "container:OXFEDEDrawer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "15FC6B131C40584600BE32C8"
-            BuildableName = "F3DEDrawer.app"
-            BlueprintName = "F3DEDrawer"
-            ReferencedContainer = "container:F3DEDrawer.xcodeproj">
+            BuildableName = "OXFEDEDrawer.app"
+            BlueprintName = "OXFEDEDrawer"
+            ReferencedContainer = "container:OXFEDEDrawer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

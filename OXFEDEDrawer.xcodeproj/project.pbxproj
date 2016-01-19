@@ -19,7 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		15FC6B141C40584600BE32C8 /* F3DEDrawer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = F3DEDrawer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		15FC6B141C40584600BE32C8 /* OXFEDEDrawer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OXFEDEDrawer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15FC6B181C40584600BE32C8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		15FC6B1A1C40584600BE32C8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		15FC6B1B1C40584600BE32C8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -51,7 +51,7 @@
 		15FC6B0B1C40584600BE32C8 = {
 			isa = PBXGroup;
 			children = (
-				15FC6B161C40584600BE32C8 /* F3DEDrawer */,
+				15FC6B161C40584600BE32C8 /* OXFEDEDrawer */,
 				15FC6B151C40584600BE32C8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,12 +59,12 @@
 		15FC6B151C40584600BE32C8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				15FC6B141C40584600BE32C8 /* F3DEDrawer.app */,
+				15FC6B141C40584600BE32C8 /* OXFEDEDrawer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		15FC6B161C40584600BE32C8 /* F3DEDrawer */ = {
+		15FC6B161C40584600BE32C8 /* OXFEDEDrawer */ = {
 			isa = PBXGroup;
 			children = (
 				15FC6B2E1C40589F00BE32C8 /* OXFEDEDrawer.h */,
@@ -83,6 +83,7 @@
 				15FC6B281C40584600BE32C8 /* Info.plist */,
 				15FC6B171C40584600BE32C8 /* Supporting Files */,
 			);
+			name = OXFEDEDrawer;
 			path = F3DEDrawer;
 			sourceTree = "<group>";
 		};
@@ -97,9 +98,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		15FC6B131C40584600BE32C8 /* F3DEDrawer */ = {
+		15FC6B131C40584600BE32C8 /* OXFEDEDrawer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 15FC6B2B1C40584600BE32C8 /* Build configuration list for PBXNativeTarget "F3DEDrawer" */;
+			buildConfigurationList = 15FC6B2B1C40584600BE32C8 /* Build configuration list for PBXNativeTarget "OXFEDEDrawer" */;
 			buildPhases = (
 				15FC6B101C40584600BE32C8 /* Sources */,
 				15FC6B111C40584600BE32C8 /* Frameworks */,
@@ -109,9 +110,9 @@
 			);
 			dependencies = (
 			);
-			name = F3DEDrawer;
+			name = OXFEDEDrawer;
 			productName = F3DEDrawer;
-			productReference = 15FC6B141C40584600BE32C8 /* F3DEDrawer.app */;
+			productReference = 15FC6B141C40584600BE32C8 /* OXFEDEDrawer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -128,7 +129,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 15FC6B0F1C40584600BE32C8 /* Build configuration list for PBXProject "F3DEDrawer" */;
+			buildConfigurationList = 15FC6B0F1C40584600BE32C8 /* Build configuration list for PBXProject "OXFEDEDrawer" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -141,7 +142,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				15FC6B131C40584600BE32C8 /* F3DEDrawer */,
+				15FC6B131C40584600BE32C8 /* OXFEDEDrawer */,
 			);
 		};
 /* End PBXProject section */
@@ -284,7 +285,7 @@
 				INFOPLIST_FILE = F3DEDrawer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.0XFEDE.F3DEDrawer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OXFEDEDrawer;
 			};
 			name = Debug;
 		};
@@ -295,14 +296,14 @@
 				INFOPLIST_FILE = F3DEDrawer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.0XFEDE.F3DEDrawer;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = OXFEDEDrawer;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		15FC6B0F1C40584600BE32C8 /* Build configuration list for PBXProject "F3DEDrawer" */ = {
+		15FC6B0F1C40584600BE32C8 /* Build configuration list for PBXProject "OXFEDEDrawer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				15FC6B291C40584600BE32C8 /* Debug */,
@@ -311,7 +312,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		15FC6B2B1C40584600BE32C8 /* Build configuration list for PBXNativeTarget "F3DEDrawer" */ = {
+		15FC6B2B1C40584600BE32C8 /* Build configuration list for PBXNativeTarget "OXFEDEDrawer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				15FC6B2C1C40584600BE32C8 /* Debug */,

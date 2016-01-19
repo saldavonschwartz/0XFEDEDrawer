@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:F3DEDrawer.xcodeproj">
+      location = "self:/Users/saldavonschwartz/workspace/ios/F3DEDrawer/OXFEDEDrawer.xcodeproj">
    </FileRef>
 </Workspace>
