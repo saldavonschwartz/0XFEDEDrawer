@@ -21,12 +21,13 @@ Simple drawer (`UIViewController` container) for iOS.
 4. For further customization inherit from the default appearance delegate `OXFEDEDrawerAppearanceDelegate` or implement the `OXFEDEDrawerAppearanceDelegate` protocol.
 
 
-[Detailed tutorial on this component's implementation](www.apple.com)
+[Detailed tutorial on this component's implementation](http://0xfede.io)
 
 <br>
 Copyright (c) 2015 Federico Saldarini
 
-[LinkedIn][l1] | [GitHub][l2]
+[LinkedIn][l1] | [Blog][l2] | [GitHub][l3]
 
 [l1]: https://www.linkedin.com/in/federicosaldarini
-[l2]: https://github.com/saldavonschwartz
+[l2]: http://0xfede.io
+[l3]: https://github.com/saldavonschwartz
