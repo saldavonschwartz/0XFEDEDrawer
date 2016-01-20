@@ -36,9 +36,10 @@ static CGFloat kDrawerShadowOpacity = 0.4;
     drawer.view.layer.shadowColor = [UIColor blackColor].CGColor;
     drawer.view.layer.shadowRadius = 6.;
     drawer.view.layer.shadowOffset = CGSizeZero;
-    drawer.view.layer.shadowOpacity = drawer.open ? kDrawerShadowOpacity : 0.;
+    drawer.view.layer.shadowOpacity = kDrawerShadowOpacity;
     state.overlay.backgroundColor = [UIColor blackColor];
     state.overlay.alpha = drawer.open ? kOverlayOpacity : 0.;
+    [self drawer:drawer appearanceForUpdate:state];
 }
 
 - (void)drawer:(OXFEDEDrawer *)drawer appearanceForUpdate:(OXFEDEDrawerAppearanceState *)state {
@@ -46,11 +47,9 @@ static CGFloat kDrawerShadowOpacity = 0.4;
 }
 
 - (void)drawer:(OXFEDEDrawer *)drawer appearanceForTransitionBegin:(OXFEDEDrawerAppearanceState *)state {
-    drawer.view.layer.shadowOpacity = kDrawerShadowOpacity;
 }
 
 - (void)drawer:(OXFEDEDrawer *)drawer appearanceForTransitionEnd:(OXFEDEDrawerAppearanceState *)state {
-    drawer.view.layer.shadowOpacity = drawer.open ? kDrawerShadowOpacity : 0.;
 }
 
 - (void)drawer:(OXFEDEDrawer *)drawer appearanceForTransitionProgress:(OXFEDEDrawerAppearanceState *)state {
