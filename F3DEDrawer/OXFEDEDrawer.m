@@ -63,7 +63,7 @@
 @property (nonatomic, assign) BOOL stateChangeTriggeredFromGesture;
 @property (nonatomic, strong) OXFEDEDrawerAppearanceState *state;
 @property (nonatomic, copy) CGPoint(^clamp)(CGPoint);
-@property (nonatomic, copy) BOOL(^isOpen)(void);
+@property (nonatomic, copy) BOOL(^shouldOpen)(void);
 @property (nonatomic, copy) CGFloat(^openFraction)(void);
 @property (nonatomic, assign) CGPoint referenceVelocity;
 @property (nonatomic, assign) BOOL transitioning;
@@ -87,7 +87,6 @@
     if (self) {
         self.state  = [OXFEDEDrawerAppearanceState new];
         [self initGeometry];
-        [self initMechanics];
         self.appearanceDelegate = [OXFEDEDrawerAppearanceDelegate new];
         [self addObserver:self forKeyPath:@"needsUpdate" options:NSKeyValueObservingOptionNew context:nil];
     }
@@ -106,26 +105,11 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(nullable void *)context {
     if ([keyPath isEqualToString:@"needsUpdate"]) {
         NSAssert(!self.transitioning,
-                 @"Attempted to modify geometry / mechanics "
-                 @"of OXFEDEDrawer at the same time as appearance delegate.");
-        _needsUpdate = NO;
+                 @"Attempted to modify a OXFEDEDrawer property affecting its "
+                 @"geometry while in the middle of a transition");
         [self updateGeometry];
-        [self updateMechanics];
         [self.appearanceDelegate drawer:self appearanceForUpdate:self.state];
     }
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    if (self.open) {
-        return;
-    }
-    
-    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        self.view.hidden = YES;
-    } completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
-        self.view.hidden = NO;
-    }];
 }
 
 - (void)setContainer:(UIViewController *)container {
@@ -166,7 +150,9 @@
     }
 }
 
+
 #pragma mark - Appearance:
+
 - (void)setAppearanceDelegate:(NSObject<OXFEDEDrawerAppearanceDelegate> *)appearanceDelegate {
     NSAssert(appearanceDelegate,
              @"OXFEDEDrawer requires an appearance delegate "
@@ -178,30 +164,14 @@
     [_appearanceDelegate drawer:self appearanceForInitialization:self.state];
 }
 
+
 #pragma mark - Geometry:
+
 - (void)initGeometry {
     self.scale = CGSizeMake(.8, 1.);
     self.view.autoresizesSubviews = NO;
-}
-
-- (void)updateGeometry {
-    if (!self.view.superview) {
-        return;
-    }
+    self.view.hidden = YES;
     
-    CGRect containerBounds = self.view.superview.bounds;
-    CGSize containerSize = containerBounds.size;
-    
-    CGSize contentSize = containerSize;
-    contentSize.width *= self.scale.width;
-    contentSize.height *= self.scale.height;
-    
-    self.view.frame = (CGRect){CGPointZero, contentSize};
-    _content.view.frame = self.view.bounds;
-}
-
-#pragma mark - Mechanics:
-- (void)initMechanics {
     self.edge = OXFEDEDrawerEdgeLeft;
     self.anchor = 0.5;
     self.state.overlay = [UIView new];
@@ -215,111 +185,121 @@
     self.edgeRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
 }
 
-- (void)updateMechanics {
+- (void)updateGeometry {
     if (!self.view.superview) {
         [self.state.overlay removeFromSuperview];
         [self.edgeRecognizer.view removeGestureRecognizer:self.edgeRecognizer];
+        return;
     }
-    else {
-        [self.view.superview addGestureRecognizer:self.edgeRecognizer];
-        self.edgeRecognizer.edges = (UIRectEdge)self.edge;
-        
-        __weak OXFEDEDrawer *_self = self;
-        CGSize containerSize = self.view.superview.bounds.size;
-        CGSize contentSize = self.view.bounds.size;
-        CGPoint anchorPoint;
-        anchorPoint.x = (containerSize.width - contentSize.width) * self.anchor;
-        anchorPoint.y = (containerSize.height - contentSize.height) * self.anchor;
-        
-        switch (self.edge) {
-            case OXFEDEDrawerEdgeLeft: {
-                self.state.openPosition = CGPointMake(0., anchorPoint.y);
-                self.state.closedPosition = (CGPoint){-contentSize.width, anchorPoint.y};
-                self.referenceVelocity = CGPointMake(1., 0.);
-                
-                self.clamp = ^CGPoint(CGPoint target) {
-                    return (CGPoint){MAX(_self.state.closedPosition.x, MIN(target.x, _self.state.openPosition.x)), anchorPoint.y};
-                };
-                
-                self.openFraction = ^() {
-                    return ABS(_self.view.frame.origin.x - self.state.closedPosition.x) / contentSize.width;
-                };
-                
-                self.isOpen = ^BOOL() {
-                    return _self.state.velocity.x  > 0.;
-                };
-                
-                break;
-            }
-                
-            case OXFEDEDrawerEdgeRight: {
-                self.state.openPosition = (CGPoint){containerSize.width - contentSize.width, anchorPoint.y};
-                self.state.closedPosition = (CGPoint){containerSize.width, anchorPoint.y};
-                self.referenceVelocity = CGPointMake(-1., 0.);
-                
-                self.clamp = ^CGPoint(CGPoint target) {
-                    return (CGPoint){MAX(_self.state.openPosition.x, MIN(target.x, _self.state.closedPosition.x)), anchorPoint.y};
-                };
-                
-                self.openFraction = ^() {
-                    return ABS(_self.view.frame.origin.x - self.state.closedPosition.x) / contentSize.width;
-                };
-                
-                self.isOpen = ^BOOL() {
-                    return _self.state.velocity.x < 0.;
-                };
-                
-                break;
-            }
-                
-            case OXFEDEDrawerEdgeTop: {
-                self.state.openPosition = CGPointMake(anchorPoint.x, 0.);
-                self.state.closedPosition = (CGPoint){anchorPoint.x, -contentSize.height};
-                self.referenceVelocity = CGPointMake(0., 1.);
-                
-                self.clamp = ^CGPoint(CGPoint target) {
-                    return (CGPoint){anchorPoint.x, MAX(_self.state.closedPosition.y, MIN(target.y, _self.state.openPosition.y))};
-                };
-                
-                self.openFraction = ^() {
-                    return ABS(_self.view.frame.origin.y - self.state.closedPosition.y) / contentSize.height;
-                };
-                
-                self.isOpen = ^BOOL() {
-                    return _self.state.velocity.y > 0.;
-                };
-                
-                break;
-            }
-                
-            case OXFEDEDrawerEdgeBottom: {
-                self.state.openPosition = (CGPoint){anchorPoint.x, containerSize.height - contentSize.height};
-                self.state.closedPosition = (CGPoint){anchorPoint.x, containerSize.height};
-                self.referenceVelocity = CGPointMake(0., -1.);
-                
-                self.clamp = ^CGPoint(CGPoint target) {
-                    return (CGPoint){anchorPoint.x, MAX(_self.state.openPosition.y, MIN(target.y, _self.state.closedPosition.y))};
-                };
-                
-                self.openFraction = ^() {
-                    return ABS(_self.view.frame.origin.y - self.state.closedPosition.y) / contentSize.height;
-                };
-                
-                self.isOpen = ^BOOL() {
-                    return _self.state.velocity.y < 0.;
-                };
-                
-                break;
-            }
+    
+    CGRect containerBounds = self.view.superview.bounds;
+    CGSize containerSize = containerBounds.size;
+    
+    CGSize contentSize = containerSize;
+    contentSize.width *= self.scale.width;
+    contentSize.height *= self.scale.height;
+    
+    __weak OXFEDEDrawer *_self = self;
+    CGPoint anchorPoint;
+    anchorPoint.x = (containerSize.width - contentSize.width) * self.anchor;
+    anchorPoint.y = (containerSize.height - contentSize.height) * self.anchor;
+    
+    switch (self.edge) {
+        case OXFEDEDrawerEdgeLeft: {
+            self.state.openPosition = CGPointMake(0., anchorPoint.y);
+            self.state.closedPosition = (CGPoint){-contentSize.width, anchorPoint.y};
+            self.referenceVelocity = CGPointMake(1., 0.);
+            
+            self.clamp = ^CGPoint(CGPoint target) {
+                return (CGPoint){MAX(_self.state.closedPosition.x, MIN(target.x, _self.state.openPosition.x)), anchorPoint.y};
+            };
+            
+            self.openFraction = ^() {
+                return ABS(_self.view.frame.origin.x - self.state.closedPosition.x) / contentSize.width;
+            };
+            
+            self.shouldOpen = ^BOOL() {
+                return _self.state.velocity.x  > 0.;
+            };
+            
+            break;
         }
-        
-        self.state.overlay.frame = self.view.superview.bounds;
-        [self.view.superview insertSubview:self.state.overlay belowSubview:self.view];
-        
-        CGPoint origin = self.open ? self.state.openPosition : self.state.closedPosition;
-        self.view.frame = (CGRect){origin, self.view.bounds.size};
+            
+        case OXFEDEDrawerEdgeRight: {
+            self.state.openPosition = (CGPoint){containerSize.width - contentSize.width, anchorPoint.y};
+            self.state.closedPosition = (CGPoint){containerSize.width, anchorPoint.y};
+            self.referenceVelocity = CGPointMake(-1., 0.);
+            
+            self.clamp = ^CGPoint(CGPoint target) {
+                return (CGPoint){MAX(_self.state.openPosition.x, MIN(target.x, _self.state.closedPosition.x)), anchorPoint.y};
+            };
+            
+            self.openFraction = ^() {
+                return ABS(_self.view.frame.origin.x - self.state.closedPosition.x) / contentSize.width;
+            };
+            
+            self.shouldOpen = ^BOOL() {
+                return _self.state.velocity.x < 0.;
+            };
+            
+            break;
+        }
+            
+        case OXFEDEDrawerEdgeTop: {
+            self.state.openPosition = CGPointMake(anchorPoint.x, 0.);
+            self.state.closedPosition = (CGPoint){anchorPoint.x, -contentSize.height};
+            self.referenceVelocity = CGPointMake(0., 1.);
+            
+            self.clamp = ^CGPoint(CGPoint target) {
+                return (CGPoint){anchorPoint.x, MAX(_self.state.closedPosition.y, MIN(target.y, _self.state.openPosition.y))};
+            };
+            
+            self.openFraction = ^() {
+                return ABS(_self.view.frame.origin.y - self.state.closedPosition.y) / contentSize.height;
+            };
+            
+            self.shouldOpen = ^BOOL() {
+                return _self.state.velocity.y > 0.;
+            };
+            
+            break;
+        }
+            
+        case OXFEDEDrawerEdgeBottom: {
+            self.state.openPosition = (CGPoint){anchorPoint.x, containerSize.height - contentSize.height};
+            self.state.closedPosition = (CGPoint){anchorPoint.x, containerSize.height};
+            self.referenceVelocity = CGPointMake(0., -1.);
+            
+            self.clamp = ^CGPoint(CGPoint target) {
+                return (CGPoint){anchorPoint.x, MAX(_self.state.openPosition.y, MIN(target.y, _self.state.closedPosition.y))};
+            };
+            
+            self.openFraction = ^() {
+                return ABS(_self.view.frame.origin.y - self.state.closedPosition.y) / contentSize.height;
+            };
+            
+            self.shouldOpen = ^BOOL() {
+                return _self.state.velocity.y < 0.;
+            };
+            
+            break;
+        }
     }
+    
+    
+    [self.view.superview addGestureRecognizer:self.edgeRecognizer];
+    self.edgeRecognizer.edges = (UIRectEdge)self.edge;
+    
+    self.state.overlay.frame = self.view.superview.bounds;
+    [self.view.superview insertSubview:self.state.overlay belowSubview:self.view];
+    
+    CGPoint origin = self.open ? self.state.openPosition : self.state.closedPosition;
+    self.view.frame = (CGRect){origin, contentSize};
+    _content.view.frame = self.view.bounds;
 }
+
+
+#pragma mark - Mechanics:
 
 - (void)setOpen:(BOOL)open {
     if (!self.stateChangeTriggeredFromGesture) {
@@ -385,7 +365,7 @@
             
         case UIGestureRecognizerStateEnded: {
             self.stateChangeTriggeredFromGesture = YES;
-            self.open = self.isOpen();
+            self.open = self.shouldOpen();
             
             break;
         }
@@ -409,13 +389,14 @@
     self.transitioning = YES;
     
     if (!self.open) {
-        [self.content viewWillAppear:NO];
+        self.view.hidden = NO;
+        self.content.view.hidden = NO;
     }
     
     self.state.openFraction = self.open ? 1. : 0.;
     self.state.targetPosition = self.view.frame.origin;
     self.state.velocity = CGPointMake(!_open ? self.referenceVelocity.x : -self.referenceVelocity.x,
-                                        !_open ? self.referenceVelocity.y : -self.referenceVelocity.y);
+                                      !_open ? self.referenceVelocity.y : -self.referenceVelocity.y);
     [self.appearanceDelegate drawer:self appearanceForTransitionBegin:self.state];
     
     if ([self.delegate respondsToSelector:@selector(drawerDidBeginPanning:)]) {
@@ -434,7 +415,8 @@
     self.transitioning = NO;
     
     if (!self.open) {
-        [self.content viewDidDisappear:NO];
+        self.view.hidden = YES;
+        self.content.view.hidden = YES;
     }
     
     if ([self.delegate respondsToSelector:@selector(drawerDidEndPanning:)]) {
