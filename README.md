@@ -21,7 +21,7 @@ Customizable drawer (`UIViewController` container) for iOS.
 4. For further customization inherit from the default appearance delegate `OXFEDEDrawerAppearanceDelegate` or implement the `OXFEDEDrawerAppearanceDelegate` protocol.
 
 
-[Detailed tutorial on this component's implementation](http://0xfede.io)
+[Detailed tutorial on this component's implementation](http://0xfede.io/2015/12/06/T-iOS-Drawer.html)
 
 <br>
 Copyright (c) 2015 Federico Saldarini
