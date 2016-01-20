@@ -32,17 +32,25 @@ static NSInteger kCellTitleTag = 99;
     [super viewDidLoad];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.tableView reloadData];
-}
-
 - (void)didMoveToParentViewController:(UIViewController *)parent {
     if ([parent isKindOfClass:OXFEDEDrawer.class]) {
         self.drawer = (OXFEDEDrawer*)parent;
         self.rootController = (RootViewController*)[[UIApplication sharedApplication].delegate window].rootViewController;
         self.navigationController = self.rootController.childViewControllers.firstObject;
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+        [self.view addObserver:self forKeyPath:@"hidden" options:NSKeyValueObservingOptionNew context:nil];
+    }
+}
+
+- (void)dealloc {
+    [self.view removeObserver:self forKeyPath:@"hidden"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
+    if ([keyPath isEqualToString:@"hidden"]) {
+        if (!self.view.hidden) {
+            [self.tableView reloadData];
+        }
     }
 }
 
