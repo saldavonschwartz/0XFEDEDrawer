@@ -1,4 +1,4 @@
-# OXFEDEDrawer
+# OXFEDE::Drawer
 
 Customizable drawer (`UIViewController` container) for iOS.
 
